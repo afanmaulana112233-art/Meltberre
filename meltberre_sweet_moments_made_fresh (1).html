@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MELTBERRE — Sweet Moments, Made Fresh</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Playfair Display (Serif) & Plus Jakarta Sans (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'melt-light': '#B88A67',  /* Light Brown */
+                        'melt-soft': '#9A6F50',   /* Soft Brown */
+                        'melt-cream': '#F7F0E8',  /* Cream Background */
+                        'melt-beige': '#E8D6C5',  /* Warm Beige Accent */
+                        'melt-dark': '#4A3024',   /* Dark Chocolate */
+                        'melt-white': '#FFFDF9'   /* Warm Soft White */
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -5px rgba(74, 48, 36, 0.08)',
+                        'floating': '0 20px 40px -10px rgba(74, 48, 36, 0.12)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFFDF9;
+            color: #4A3024;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Smooth Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F0E8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #B88A67;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9A6F50;
+        }
+
+        /* Floating Animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+        .animate-float {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        /* Pulse Equalizer Bars for Sound Player */
+        @keyframes eqBar {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
+        }
+        .eq-bar-1 { animation: eqBar 0.8s ease-in-out infinite 0.1s; }
+        .eq-bar-2 { animation: eqBar 0.8s ease-in-out infinite 0.3s; }
+        .eq-bar-3 { animation: eqBar 0.8s ease-in-out infinite 0.2s; }
+    </style>
+</head>
+<body class="antialiased selection:bg-melt-beige selection:text-melt-dark flex flex-col min-h-screen">
+
+    <div class="bg-melt-dark text-melt-cream text-xs py-2 px-4 text-center font-medium tracking-wide flex justify-center items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Sweet Moments, Made Fresh — Freshly baked daily in our kitchen!</span>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-melt-white/90 backdrop-blur-md border-b border-melt-beige/40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#home" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-full bg-melt-beige flex items-center justify-center text-melt-dark font-serif font-bold text-xl shadow-sm group-hover:scale-105 transition-transform">
+                    M
+                </div>
+                <div>
+                    <span class="font-serif text-2xl font-bold tracking-tight text-melt-dark block leading-none">MELTBERRE</span>
+                    <span class="text-[9px] uppercase tracking-widest text-melt-soft font-semibold block mt-0.5">Sweet Moments</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-melt-dark">
+                <a href="#home" class="hover:text-melt-light transition-colors py-1">Home</a>
+                <a href="#about" class="hover:text-melt-light transition-colors py-1">About</a>
+                <a href="#products" class="hover:text-melt-light transition-colors py-1">Products</a>
+                <a href="#how-to-order" class="hover:text-melt-light transition-colors py-1">How to Order</a>
+                <a href="#contact" class="hover:text-melt-light transition-colors py-1">Contact</a>
+            </nav>
+
+            <!-- Actions Right: Music Toggle, Cart Drawer Button, Mobile Menu -->
+            <div class="flex items-center space-x-3">
+                <!-- Top Mini Music Toggle Button -->
+                <button id="musicToggleBtnHeader" onclick="toggleAudio()" class="px-3 py-1.5 rounded-full bg-melt-cream border border-melt-beige text-xs text-melt-dark flex items-center gap-2 hover:bg-melt-beige transition-all">
+                    <i id="musicIconHeader" class="fa-solid fa-music text-melt-soft"></i>
+                    <span id="musicTextHeader" class="hidden sm:inline">Play Audio</span>
+                </button>
+
+                <!-- Shopping Cart Button with Dynamic Badge -->
+                <button onclick="toggleCartDrawer(true)" class="relative p-2.5 rounded-full bg-melt-dark text-melt-cream hover:bg-melt-soft transition-all shadow-md group">
+                    <i class="fa-solid fa-bag-shopping text-base"></i>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-amber-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-melt-white">0</span>
+                </button>
+
+                <!-- Mobile Hamburger Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-melt-dark hover:bg-melt-cream transition-colors">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-melt-white border-b border-melt-beige/50 px-6 py-4 space-y-3">
+            <a href="#home" onclick="toggleMobileMenu()" class="block text-melt-dark font-medium py-2 border-b border-melt-cream">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-melt-dark font-medium py-2 border-b border-melt-cream">About</a>
+            <a href="#products" onclick="toggleMobileMenu()" class="block text-melt-dark font-medium py-2 border-b border-melt-cream">Products</a>
+            <a href="#how-to-order" onclick="toggleMobileMenu()" class="block text-melt-dark font-medium py-2 border-b border-melt-cream">How to Order</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-melt-dark font-medium py-2 border-b border-melt-cream">Contact</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section id="home" class="relative py-12 md:py-24 overflow-hidden bg-gradient-to-b from-melt-white via-melt-cream/50 to-melt-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Hero Text Column -->
+                    <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-melt-cream border border-melt-beige text-xs font-semibold text-melt-soft">
+                            <span class="w-2 h-2 rounded-full bg-amber-700"></span>
+                            Artisan Dessert Kitchen
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-melt-dark leading-[1.15]">
+                            Little treats,<br>
+                            <span class="italic font-normal text-melt-light">big happiness.</span>
+                        </h1>
+                        <p class="text-base sm:text-lg text-melt-dark/80 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                            Dessert manis yang dibuat fresh setiap hari untuk menemani setiap momen kecil yang berarti bersama orang tersayang.
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#products" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-melt-dark text-melt-cream font-medium shadow-lg hover:bg-melt-soft transition-all text-center">
+                                Order Now
+                            </a>
+                            <a href="#about" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-melt-cream text-melt-dark font-medium border border-melt-beige hover:bg-melt-beige/50 transition-all text-center">
+                                Explore Story
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Hero Visual Box -->
+                    <div class="lg:col-span-6 relative flex justify-center items-center">
+                        <div class="relative w-full max-w-lg">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-melt-beige to-melt-cream rounded-3xl transform rotate-3 scale-95 shadow-lg"></div>
+
+                            <div class="relative bg-white p-4 sm:p-5 rounded-3xl shadow-floating border border-melt-beige/40 overflow-hidden">
+                                <!-- 📌 HERO IMAGE PLACEHOLDER (Recommended: 800x800 px) -->
+                                <img src="1000137860.jpg.jpeg" 
+                                     alt="Meltberre Signature Dessert" 
+                                     class="w-full h-80 sm:h-96 object-cover rounded-2xl shadow-inner"
+                                     onerror="this.src='https://placehold.co/800x800/E8D6C5/4A3024?text=MELTBERRE+Dessert'">
+
+                                <!-- Floating Badge 1: Best Seller -->
+                                <div class="absolute top-8 left-8 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-melt-beige/60 flex items-center gap-2.5 animate-float">
+                                    <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-xs">
+                                        <i class="fa-solid fa-crown"></i>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-[10px] text-gray-500 uppercase font-bold leading-tight">Favorite</p>
+                                        <p class="text-xs font-bold text-melt-dark">Berry Choco Melt</p>
+                                    </div>
+                                </div>
+
+                                <!-- Floating Badge 2: Freshly Made -->
+                                <div class="absolute bottom-8 right-8 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-melt-beige/60 flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs">
+                                        <i class="fa-solid fa-leaf"></i>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-[10px] text-gray-500 uppercase font-bold leading-tight">Guaranteed</p>
+                                        <p class="text-xs font-bold text-melt-dark">Freshly Made Daily</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 bg-melt-cream/40 border-y border-melt-beige/30 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Story Visual Grid -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- 📌 ABOUT IMAGE 1 PLACEHOLDER (Recommended: 600x600 px) -->
+                            <img src="1000137862.jpg.jpeg" 
+                                 alt="Cake Preparation" 
+                                 class="rounded-2xl shadow-md object-cover h-56 w-full transform hover:scale-105 transition-all duration-300">
+                            <!-- 📌 ABOUT IMAGE 2 PLACEHOLDER (Recommended: 600x600 px) -->
+                            <img src="1000137864.jpg.jpeg" 
+                                 alt="Fresh Berries Topping" 
+                                 class="rounded-2xl shadow-md object-cover h-56 w-full mt-6 transform hover:scale-105 transition-all duration-300">
+                        </div>
+                        <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-melt-white px-6 py-3 rounded-full shadow-lg border border-melt-beige text-center whitespace-nowrap">
+                            <span class="font-serif italic text-melt-dark text-sm font-semibold">"Made with love in every slice"</span>
+                        </div>
+                    </div>
+
+                    <!-- Right Story Content -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <span class="text-xs font-bold uppercase tracking-widest text-melt-soft block">About Meltberre</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-melt-dark">
+                            Simple sweetness, thoughtfully made.
+                        </h2>
+                        <p class="text-melt-dark/80 text-base leading-relaxed">
+                            Meltberre hadir untuk membawa dessert sederhana menjadi momen kecil yang terasa spesial. Setiap produk dibuat dengan perhatian mendalam terhadap rasa, kesegaran bahan, estetika penyajian, dan kemasan yang aman.
+                        </p>
+
+                        <!-- 3 Core Values Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                            <div class="p-4 bg-melt-white rounded-2xl border border-melt-beige/50 shadow-sm">
+                                <div class="w-10 h-10 rounded-xl bg-melt-cream flex items-center justify-center text-melt-dark mb-3">
+                                    <i class="fa-solid fa-wheat-awn"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-melt-dark mb-1">Fresh Ingredients</h3>
+                                <p class="text-xs text-melt-dark/70">Bahan terpilih berkualitas tinggi tanpa pengawet buatan.</p>
+                            </div>
+
+                            <div class="p-4 bg-melt-white rounded-2xl border border-melt-beige/50 shadow-sm">
+                                <div class="w-10 h-10 rounded-xl bg-melt-cream flex items-center justify-center text-melt-dark mb-3">
+                                    <i class="fa-solid fa-fire-burner"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-melt-dark mb-1">Made to Order</h3>
+                                <p class="text-xs text-melt-dark/70">Dibuat fresh sesuai dengan urutan pesanan harian.</p>
+                            </div>
+
+                            <div class="p-4 bg-melt-white rounded-2xl border border-melt-beige/50 shadow-sm">
+                                <div class="w-10 h-10 rounded-xl bg-melt-cream flex items-center justify-center text-melt-dark mb-3">
+                                    <i class="fa-solid fa-box-open"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-melt-dark mb-1">Packed With Care</h3>
+                                <p class="text-xs text-melt-dark/70">Dikemas aman dan elegan cocok untuk hadiah maupun dinikmati sendiri.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-10">
+                <span class="text-xs uppercase tracking-widest font-bold text-melt-soft">Our Products</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-melt-dark">Pick your sweet mood.</h2>
+                <p class="text-sm text-melt-dark/70 max-w-md mx-auto">Pilih kreasi dessert favoritmu untuk melengkapi harimu.</p>
+
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap justify-center gap-2 pt-6" id="categoryFilters">
+                    <button onclick="filterProducts('All')" class="category-btn active px-5 py-2 rounded-full text-xs font-semibold bg-melt-dark text-melt-cream shadow-sm transition-all">All Treats</button>
+                    <button onclick="filterProducts('Paket Hemat')" class="category-btn px-5 py-2 rounded-full text-xs font-semibold bg-melt-cream text-melt-dark hover:bg-melt-beige transition-all">Paket Hemat</button>
+                    <button onclick="filterProducts('Donat')" class="category-btn px-5 py-2 rounded-full text-xs font-semibold bg-melt-cream text-melt-dark hover:bg-melt-beige transition-all">Donat</button>
+                    <button onclick="filterProducts('Snack')" class="category-btn px-5 py-2 rounded-full text-xs font-semibold bg-melt-cream text-melt-dark hover:bg-melt-beige transition-all">Snack</button>
+                    <button onclick="filterProducts('Add-On')" class="category-btn px-5 py-2 rounded-full text-xs font-semibold bg-melt-cream text-melt-dark hover:bg-melt-beige transition-all">Add-On</button>
+                </div>
+            </div>
+
+            <!-- Dynamic Products Grid -->
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Javascript will populate cards here -->
+            </div>
+        </section>
+
+        <section id="how-to-order" class="py-20 bg-melt-cream/30 border-t border-melt-beige/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-12">
+                    <span class="text-xs uppercase tracking-widest font-bold text-melt-soft">Simple Process</span>
+                    <h2 class="font-serif text-3xl font-bold text-melt-dark">How to Order</h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-melt-white p-6 rounded-2xl border border-melt-beige/40 shadow-sm relative">
+                        <span class="text-4xl font-serif font-bold text-melt-beige/60 absolute top-4 right-4">01</span>
+                        <div class="w-12 h-12 rounded-xl bg-melt-cream text-melt-dark flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-melt-dark mb-1">Choose Treats</h3>
+                        <p class="text-xs text-melt-dark/70 leading-relaxed">Pilih dessert & snack favoritmu di halaman katalog kami.</p>
+                    </div>
+
+                    <div class="bg-melt-white p-6 rounded-2xl border border-melt-beige/40 shadow-sm relative">
+                        <span class="text-4xl font-serif font-bold text-melt-beige/60 absolute top-4 right-4">02</span>
+                        <div class="w-12 h-12 rounded-xl bg-melt-cream text-melt-dark flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-melt-dark mb-1">Add to Cart</h3>
+                        <p class="text-xs text-melt-dark/70 leading-relaxed">Atur jumlah pesanan & beri catatan khusus jika ada.</p>
+                    </div>
+
+                    <div class="bg-melt-white p-6 rounded-2xl border border-melt-beige/40 shadow-sm relative">
+                        <span class="text-4xl font-serif font-bold text-melt-beige/60 absolute top-4 right-4">03</span>
+                        <div class="w-12 h-12 rounded-xl bg-melt-cream text-melt-dark flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-melt-dark mb-1">Pay & Checkout</h3>
+                        <p class="text-xs text-melt-dark/70 leading-relaxed">Pilih metode pembayaran WhatsApp lansung atau Scan QRIS.</p>
+                    </div>
+
+                    <div class="bg-melt-white p-6 rounded-2xl border border-melt-beige/40 shadow-sm relative">
+                        <span class="text-4xl font-serif font-bold text-melt-beige/60 absolute top-4 right-4">04</span>
+                        <div class="w-12 h-12 rounded-xl bg-melt-cream text-melt-dark flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-face-smile-beam"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-melt-dark mb-1">Enjoy Fresh</h3>
+                        <p class="text-xs text-melt-dark/70 leading-relaxed">Pesanan diproses & siap diantar ke tempatmu!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-xs uppercase tracking-widest font-bold text-melt-soft">Behind The Kitchen</span>
+                <h2 class="font-serif text-3xl font-bold text-melt-dark">From ingredients to happy bites.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="space-y-3 text-center md:text-left">
+                    <span class="inline-block px-3 py-1 rounded-full bg-melt-beige text-xs font-bold text-melt-dark">Step 01</span>
+                    <h3 class="font-bold text-base text-melt-dark">Choose Premium Ingredients</h3>
+                    <p class="text-xs text-melt-dark/70">Cokelat Belgia dan buah berry pilihan segar diperiksa setiap hari.</p>
+                </div>
+                <div class="space-y-3 text-center md:text-left">
+                    <span class="inline-block px-3 py-1 rounded-full bg-melt-beige text-xs font-bold text-melt-dark">Step 02</span>
+                    <h3 class="font-bold text-base text-melt-dark">Bake Fresh Daily</h3>
+                    <p class="text-xs text-melt-dark/70">Dipanggang & diracik sesuai pesanan masuk demi menjaga tekstur lumer.</p>
+                </div>
+                <div class="space-y-3 text-center md:text-left">
+                    <span class="inline-block px-3 py-1 rounded-full bg-melt-beige text-xs font-bold text-melt-dark">Step 03</span>
+                    <h3 class="font-bold text-base text-melt-dark">Quality Check</h3>
+                    <p class="text-xs text-melt-dark/70">Standard rasa dan tampilan visual diperiksa sebelum dikemas.</p>
+                </div>
+                <div class="space-y-3 text-center md:text-left">
+                    <span class="inline-block px-3 py-1 rounded-full bg-melt-beige text-xs font-bold text-melt-dark">Step 04</span>
+                    <h3 class="font-bold text-base text-melt-dark">Aesthetic Packaging</h3>
+                    <p class="text-xs text-melt-dark/70">Dikemas dalam kotak estetis yang menjaga bentuk & kualitas kue.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-melt-cream/50 border-y border-melt-beige/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-12">
+                    <span class="text-xs uppercase tracking-widest font-bold text-melt-soft">Customer Reviews</span>
+                    <h2 class="font-serif text-3xl font-bold text-melt-dark">A Little Love From Our Customers</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 bg-melt-white rounded-2xl border border-melt-beige/50 shadow-sm space-y-4">
+                        <div class="text-amber-500 text-xs space-x-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-melt-dark/80 italic leading-relaxed">"Berry Choco Melt-nya beneran lumer banget! Manisnya pas nggak bikin enek, rasa berry-nya seger."</p>
+                        <div class="text-xs font-bold text-melt-dark">— Amanda R.</div>
+                    </div>
+
+                    <div class="p-6 bg-melt-white rounded-2xl border border-melt-beige/50 shadow-sm space-y-4">
+                        <div class="text-amber-500 text-xs space-x-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-melt-dark/80 italic leading-relaxed">"Donat vanilla-nya super empuk! Packagingnya juga estetik banget cocok buat kado ulang tahun temen."</p>
+                        <div class="text-xs font-bold text-melt-dark">— Kevin Pratama</div>
+                    </div>
+
+                    <div class="p-6 bg-melt-white rounded-2xl border border-melt-beige/50 shadow-sm space-y-4">
+                        <div class="text-amber-500 text-xs space-x-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-melt-dark/80 italic leading-relaxed">"Order via WhatsApp gampang banget, admin ramah & prosesnya cepat. Pasti bakal re-order lagi."</p>
+                        <div class="text-xs font-bold text-melt-dark">— Nadya S.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-xs uppercase tracking-widest font-bold text-melt-soft">@meltberre.id</span>
+                    <h2 class="font-serif text-3xl font-bold text-melt-dark mt-1">Follow our sweet moments.</h2>
+                </div>
+                <a id="igFollowLink" href="https://instagram.com/meltberre.id" target="_blank" rel="noopener noreferrer" class="mt-4 md:mt-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-melt-cream text-melt-dark font-semibold border border-melt-beige hover:bg-melt-beige/60 transition-all text-sm">
+                    <i class="fa-brands fa-instagram text-base text-pink-600"></i>
+                    <span id="igUsernameText">Follow @meltberre.id</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <!-- 📌 INSTAGRAM IMAGE 1 PLACEHOLDER (Recommended: 500x500 px) -->
+                <a href="https://instagram.com/meltberre" target="_blank" class="group relative overflow-hidden rounded-2xl aspect-square bg-melt-cream block">
+                    <img src="1.jpg" alt="Instagram Post" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500">
+                    <div class="absolute inset-0 bg-melt-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                        <i class="fa-brands fa-instagram text-2xl"></i>
+                    </div>
+                </a>
+                <!-- 📌 INSTAGRAM IMAGE 2 PLACEHOLDER (Recommended: 500x500 px) -->
+                <a href="https://instagram.com/meltberre" target="_blank" class="group relative overflow-hidden rounded-2xl aspect-square bg-melt-cream block">
+                    <img src="2.jpg" alt="Instagram Post" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500">
+                    <div class="absolute inset-0 bg-melt-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                        <i class="fa-brands fa-instagram text-2xl"></i>
+                    </div>
+                </a>
+                <!-- 📌 INSTAGRAM IMAGE 3 PLACEHOLDER (Recommended: 500x500 px) -->
+                <a href="https://instagram.com/meltberre" target="_blank" class="group relative overflow-hidden rounded-2xl aspect-square bg-melt-cream block">
+                    <img src="3.jpg" alt="Instagram Post" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500">
+                    <div class="absolute inset-0 bg-melt-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                        <i class="fa-brands fa-instagram text-2xl"></i>
+                    </div>
+                </a>
+                <!-- 📌 INSTAGRAM IMAGE 4 PLACEHOLDER (Recommended: 500x500 px) -->
+                <a href="https://instagram.com/meltberre" target="_blank" class="group relative overflow-hidden rounded-2xl aspect-square bg-melt-cream block">
+                    <img src="1(1).jpg" alt="Instagram Post" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-500">
+                    <div class="absolute inset-0 bg-melt-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                        <i class="fa-brands fa-instagram text-2xl"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="py-20 bg-melt-cream/30 border-t border-melt-beige/30">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-10">
+                    <span class="text-xs uppercase tracking-widest font-bold text-melt-soft">FAQ</span>
+                    <h2 class="font-serif text-3xl font-bold text-melt-dark">Frequently Asked Questions</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <details class="group bg-melt-white p-5 rounded-2xl border border-melt-beige/50 [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between font-bold text-sm text-melt-dark cursor-pointer">
+                            <span>Apakah produk Meltberre dibuat fresh?</span>
+                            <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-xs"></i></span>
+                        </summary>
+                        <p class="mt-3 text-xs text-melt-dark/70 leading-relaxed">
+                            Ya, seluruh dessert kami dibuat fresh sesuai urutan pesanan harian tanpa bahan pengawet buatan.
+                        </p>
+                    </details>
+
+                    <details class="group bg-melt-white p-5 rounded-2xl border border-melt-beige/50 [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between font-bold text-sm text-melt-dark cursor-pointer">
+                            <span>Bagaimana cara melakukan pemesanan?</span>
+                            <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-xs"></i></span>
+                        </summary>
+                        <p class="mt-3 text-xs text-melt-dark/70 leading-relaxed">
+                            Pilih produk di website, masukkan keranjang, lalu klik checkout via WhatsApp atau bayar langsung via QRIS.
+                        </p>
+                    </details>
+
+                    <details class="group bg-melt-white p-5 rounded-2xl border border-melt-beige/50 [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between font-bold text-sm text-melt-dark cursor-pointer">
+                            <span>Apakah menerima pembayaran QRIS?</span>
+                            <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-xs"></i></span>
+                        </summary>
+                        <p class="mt-3 text-xs text-melt-dark/70 leading-relaxed">
+                            Ya, tersedia opsi Scan QRIS langsung dari semua aplikasi E-Wallet (Gopay, OVO, ShopeePay, Dana) dan Mobile Banking.
+                        </p>
+                    </details>
+
+                    <details class="group bg-melt-white p-5 rounded-2xl border border-melt-beige/50 [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex items-center justify-between font-bold text-sm text-melt-dark cursor-pointer">
+                            <span>Berapa lama estimasi pengerjaan & pengiriman?</span>
+                            <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down text-xs"></i></span>
+                        </summary>
+                        <p class="mt-3 text-xs text-melt-dark/70 leading-relaxed">
+                            Proses pembuatan sekitar 30–60 menit sebelum dikirim oleh kurir instan/sameday.
+                        </p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-melt-dark to-melt-soft text-melt-cream rounded-3xl p-8 sm:p-12 shadow-floating relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center relative z-10">
+                    <div class="space-y-4">
+                        <span class="text-xs uppercase tracking-widest text-melt-beige font-semibold">Get In Touch</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold">Let's Make Your Day Sweeter.</h2>
+                        <p class="text-melt-cream/80 text-sm max-w-md">Ada pertanyaan khusus atau butuh pesanan dalam jumlah besar untuk acara? Hubungi kami langsung.</p>
+                        
+                        <div class="space-y-2 pt-2 text-xs text-melt-beige">
+                            <p><i class="fa-solid fa-clock w-5"></i> Jam Operasional Weekend: 09:00 - 20:00 WIB</p>
+                            <p><i class="fa-solid fa-location-dot w-5"></i> Area Pengiriman: Instant & Sameday Delivery</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-start lg:justify-end">
+                        <a id="contactWaBtn" href="#" target="_blank" class="px-6 py-3.5 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-500 transition-all flex items-center justify-center gap-2 text-sm shadow-md">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            Chat on WhatsApp
+                        </a>
+                        <a id="contactIgBtn" href="https://instagram.com/meltberre.id" target="_blank" class="px-6 py-3.5 rounded-full bg-melt-cream text-melt-dark font-semibold hover:bg-melt-beige transition-all flex items-center justify-center gap-2 text-sm shadow-md">
+                            <i class="fa-brands fa-instagram text-lg text-pink-600"></i>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-melt-dark text-melt-cream py-12 border-t border-melt-soft/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pb-8 border-b border-melt-soft/20">
+                <div class="text-center md:text-left">
+                    <span class="font-serif text-2xl font-bold tracking-tight block">MELTBERRE</span>
+                    <span class="text-xs text-melt-beige/70">Sweet Moments, Made Fresh.</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-xs text-melt-cream/80">
+                    <a href="#home" class="hover:text-melt-beige transition-colors">Home</a>
+                    <a href="#about" class="hover:text-melt-beige transition-colors">About</a>
+                    <a href="#products" class="hover:text-melt-beige transition-colors">Products</a>
+                    <a href="#how-to-order" class="hover:text-melt-beige transition-colors">How to Order</a>
+                    <a href="#contact" class="hover:text-melt-beige transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="pt-8 text-center text-xs text-melt-beige/50">
+                © 2026 Meltberre. All rights reserved. Sweet treats made with love.
+            </div>
+        </div>
+    </footer>
+
+    <div id="productModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-melt-white rounded-3xl max-w-lg w-full overflow-hidden shadow-floating border border-melt-beige/50 relative animate-fade-in">
+            <!-- Close Modal Button -->
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/80 text-melt-dark flex items-center justify-center hover:bg-white transition-all shadow-md">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Content Body -->
+            <div id="modalContent" class="p-6 space-y-5">
+                <!-- JavaScript will populate modal info -->
+            </div>
+        </div>
+    </div>
+
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div onclick="toggleCartDrawer(false)" class="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity"></div>
+        
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-melt-white shadow-2xl flex flex-col border-l border-melt-beige/50">
+                
+                <!-- Drawer Header -->
+                <div class="p-6 bg-melt-cream/50 border-b border-melt-beige/40 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-melt-dark"></i>
+                        <h2 class="font-serif font-bold text-lg text-melt-dark">Your Order Cart</h2>
+                    </div>
+                    <button onclick="toggleCartDrawer(false)" class="p-2 text-melt-dark hover:bg-melt-beige/50 rounded-full transition-all">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Drawer Cart Items Container -->
+                <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-6 space-y-4">
+                    <!-- JavaScript will dynamically render cart items -->
+                </div>
+
+                <!-- Drawer Cart Footer Subtotal & Checkout -->
+                <div class="p-6 bg-melt-cream/40 border-t border-melt-beige/40 space-y-4">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-melt-dark/70 font-medium">Subtotal</span>
+                        <span id="cartSubtotalText" class="font-serif font-bold text-lg text-melt-dark">Rp0</span>
+                    </div>
+                    <button id="checkoutBtn" onclick="openCheckoutModal()" class="w-full py-3.5 rounded-full bg-melt-dark text-melt-cream font-semibold hover:bg-melt-soft transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+                        Proceed to Checkout
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="checkoutModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-melt-white rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-floating border border-melt-beige/50 p-6 sm:p-8 relative">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-melt-cream text-melt-dark flex items-center justify-center hover:bg-melt-beige transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 class="font-serif text-2xl font-bold text-melt-dark mb-1">Checkout Order</h2>
+            <p class="text-xs text-melt-dark/70 mb-6">Lengkapi data penerima & pilih metode pembayaran.</p>
+
+            <!-- Order Flow Progress Steps Indicator -->
+            <div class="flex items-center justify-between border-b border-melt-beige pb-4 mb-6 text-xs font-semibold">
+                <span class="text-melt-dark flex items-center gap-1.5"><i class="fa-solid fa-check-circle text-emerald-600"></i> 1. Cart</span>
+                <span class="text-melt-dark flex items-center gap-1.5"><i class="fa-solid fa-circle-dot text-amber-700"></i> 2. Details</span>
+                <span class="text-melt-dark/50 flex items-center gap-1.5"><i class="fa-regular fa-circle"></i> 3. Payment</span>
+            </div>
+
+            <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-melt-dark mb-1">Nama Lengkap *</label>
+                    <input type="text" id="custName" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 rounded-xl border border-melt-beige bg-melt-white text-xs text-melt-dark focus:outline-none focus:ring-2 focus:ring-melt-light">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-melt-dark mb-1">Nomor WhatsApp *</label>
+                    <input type="tel" id="custPhone" required placeholder="Contoh: 081234567890" class="w-full px-4 py-2.5 rounded-xl border border-melt-beige bg-melt-white text-xs text-melt-dark focus:outline-none focus:ring-2 focus:ring-melt-light">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-melt-dark mb-1">Alamat Pengiriman *</label>
+                    <textarea id="custAddress" required rows="2" placeholder="Jl. Mawar No. 12, Kecamatan, Kota..." class="w-full px-4 py-2.5 rounded-xl border border-melt-beige bg-melt-white text-xs text-melt-dark focus:outline-none focus:ring-2 focus:ring-melt-light"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-melt-dark mb-1">Catatan Pesanan Tambahan (Opsional)</label>
+                    <input type="text" id="custNotes" placeholder="Contoh: Kirim jam 2 siang, ucapan kartu..." class="w-full px-4 py-2.5 rounded-xl border border-melt-beige bg-melt-white text-xs text-melt-dark focus:outline-none focus:ring-2 focus:ring-melt-light">
+                </div>
+
+                <!-- Payment Method Selection -->
+                <div class="pt-2">
+                    <label class="block text-xs font-bold text-melt-dark mb-2">Pilih Metode Pembayaran *</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="p-3 border rounded-xl border-melt-beige bg-melt-cream/30 flex items-center gap-2 cursor-pointer hover:bg-melt-cream">
+                            <input type="radio" name="paymentMethod" value="WA" checked onclick="togglePaymentView('WA')" class="text-melt-dark focus:ring-melt-light">
+                            <span class="text-xs font-semibold text-melt-dark">Direct WhatsApp</span>
+                        </label>
+                        <label class="p-3 border rounded-xl border-melt-beige bg-melt-cream/30 flex items-center gap-2 cursor-pointer hover:bg-melt-cream">
+                            <input type="radio" name="paymentMethod" value="QRIS" onclick="togglePaymentView('QRIS')" class="text-melt-dark focus:ring-melt-light">
+                            <span class="text-xs font-semibold text-melt-dark">Pay via QRIS</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- QRIS Display Section (Hidden by default until toggled) -->
+                <div id="qrisContainer" class="hidden p-4 bg-melt-cream/40 border border-melt-beige rounded-2xl text-center space-y-3">
+                    <div class="bg-white p-4 rounded-xl inline-block shadow-sm border border-melt-beige">
+                        <!-- 📌 QRIS BARCODE PLACEHOLDER (Recommended: 400x400 px) -->
+                        <div class="w-48 h-48 mx-auto flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2 border">
+                            <img id="qrisImgDisplay" src="https://placehold.co/400x400/FFFDF9/4A3024?text=SCAN+QRIS+DISINI" alt="Scan QRIS Meltberre" class="max-h-full max-w-full object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=MELTBERRE-PAYMENT-IDR'">
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-melt-soft">Total Pembayaran</p>
+                        <p id="qrisTotalDisplay" class="font-serif font-bold text-xl text-melt-dark">Rp0</p>
+                    </div>
+                    <ol class="text-left text-[11px] text-melt-dark/80 space-y-1 list-decimal list-inside bg-white p-3 rounded-xl border border-melt-beige/40">
+                        <li>Scan QRIS menggunakan M-Banking / E-Wallet pilihanmu.</li>
+                        <li>Pastikan nominal pembayaran pas.</li>
+                        <li>Upload screenshot bukti bayar di bawah ini.</li>
+                    </ol>
+
+                    <!-- Receipt Upload File Input -->
+                    <div class="text-left pt-2">
+                        <label class="block text-xs font-bold text-melt-dark mb-1">Upload Bukti Pembayaran *</label>
+                        <input type="file" id="receiptUpload" accept="image/*" onchange="handleReceiptPreview(event)" class="w-full text-xs text-melt-dark file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-melt-dark file:text-melt-cream hover:file:bg-melt-soft cursor-pointer">
+                        <div id="receiptPreviewContainer" class="hidden mt-3 flex items-center gap-3 bg-white p-2 rounded-xl border border-melt-beige">
+                            <img id="receiptPreviewImg" src="" alt="Bukti Transfer" class="w-12 h-12 object-cover rounded-lg border">
+                            <span id="receiptFileName" class="text-xs text-melt-dark font-medium truncate flex-grow"></span>
+                            <button type="button" onclick="clearReceiptUpload()" class="text-red-500 text-xs font-bold p-1 hover:text-red-700">Remove</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitOrderBtn" class="w-full py-4 rounded-full bg-emerald-700 text-white font-bold hover:bg-emerald-600 transition-all shadow-lg text-sm flex items-center justify-center gap-2 mt-4">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    Send Order via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="floatingMusicPlayer" class="fixed bottom-6 left-6 z-40 bg-melt-white/95 backdrop-blur-md p-3 rounded-full shadow-floating border border-melt-beige/70 flex items-center gap-3 transition-all duration-300 transform hover:scale-105">
+        <button onclick="toggleAudio()" class="w-10 h-10 rounded-full bg-melt-dark text-melt-cream flex items-center justify-center hover:bg-melt-soft transition-all shadow-md">
+            <i id="musicPlayIcon" class="fa-solid fa-play text-xs"></i>
+        </button>
+
+        <div class="hidden sm:flex flex-col pr-2">
+            <span class="text-[10px] uppercase font-bold text-melt-soft tracking-wider">Background Music</span>
+            <span class="text-xs font-semibold text-melt-dark">Meltberre Lounge</span>
+        </div>
+
+        <!-- Equalizer Bars Visualizer -->
+        <div id="eqVisualizer" class="hidden flex items-end gap-0.5 h-4 px-1">
+            <span class="w-1 bg-melt-soft rounded-full eq-bar-1"></span>
+            <span class="w-1 bg-melt-light rounded-full eq-bar-2"></span>
+            <span class="w-1 bg-melt-dark rounded-full eq-bar-3"></span>
+        </div>
+
+        <audio id="bgAudio" loop preload="auto">
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-ambient-111347.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Toast Notification Banner -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-melt-dark text-melt-cream px-5 py-3 rounded-2xl shadow-floating border border-melt-soft/50 text-xs font-semibold flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+        <span id="toastMessage">Produk ditambahkan ke keranjang!</span>
+    </div>
+
+    <script>
+        /* =================================================================
+           📌 CATATAN PENTING UNTUK PENGGUNAAN PATH GAMBAR LOKAL:
+           Pastikan seluruh string path seperti "images/hero.jpg" atau URL
+           selalu diapit tanda kutip ganda ("...") atau tanda kutip tunggal ('...').
+           ================================================================= */
+
+        // Configuration Object
+        const MELTBERRE_CONFIG = {
+            whatsappNumber: "6281548244590", // Ganti dengan nomor WhatsApp Anda
+            instagramUrl: "https://instagram.com/meltberre.id",
+            instagramUsername: "@meltberre.id",
+            currency: "IDR",
+            // 📌 PLACEHOLDER QRIS (Ganti dengan file lokal "images/qris.jpg" atau link online)
+            qrisImage: "https://placehold.co/400x400/FFFDF9/4A3024?text=SCAN+QRIS+DISINI",
+            musicFile: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-ambient-111347.mp3"
+        };
+
+        // Products Master Dataset
+        // 📌 PLACEHOLDER KATALOG PRODUK (Ganti 'image' dengan file gambar Anda sendiri)
+        const PRODUCTS = [
+            {
+                id: 1,
+                name: "Berry Choco Melt 1 Pcs",
+                category: "Donat",
+                price: 10.000,
+                priceDisplay: "Rp10.000",
+                badge: "Bestseller",
+                image: "melberry.png",
+                description: "Dessert cokelat lumer premium dipadukan dengan lelehan strawberry jam segar & taburan buah strawberry manis asam. (Varian: Chocolate, Matcha, Vanilla, atau Mix Chocolate x Macha, Chocolate x Vanila)"
+            },
+            {
+                id: 2,
+                name: "Berry Love 1 Pcs",
+                category: "Donat",
+                price: 10.000,
+                priceDisplay: "Rp10.000",
+                badge: "Popular",
+                image: "love.png",
+                description: "Donat berbentuk Love yang manis dan cantik, cocok untuk hadiah. (Varian: Chocolate, Matcha, Vanilla)"
+            },
+            {
+                id: 3,
+                name: "Berry Dipped 3 Pcs",
+                category: "Snack",
+                price: 10.000,
+                priceDisplay: "Rp10.000",
+                badge: null,
+                image: "dipped.png",
+                description: "Buah berry segar yang dicelup dalam cokelat lembut dengan rasa manis yang menggoda. (Varian: Chocolate, Matcha, Vanilla)"
+            },
+            {
+                id: 4,
+                name: "Berry Stick 5 Pcs",
+                category: "Snack",
+                price: 10.000,
+                priceDisplay: "Rp10.000",
+                badge: "New",
+                image: "stick.png",
+                description: "Stik pastry renyah berselimutkan gula kayu manis & saus cocolan berry segar. (Varian: Chocolate, Matcha, Vanilla)"
+            },
+            {
+                id: 5,
+                name: "Berry Bites 10 Pcs",
+                category: "Snack",
+                price: 10.000,
+                priceDisplay: "Rp10.000",
+                badge: "Favorite",
+                image: "bites.png",
+                description: "Potongan mini cake bite-sized dengan siraman couverture chocolate dan potongan berry. (Varian: Chocolate, Matcha, Vanilla)"
+            },
+            {
+                id: 6,
+                name: "Berry Choco Melt 3 Pcs",
+                category: "Paket Hemat",
+                price: 25.000,
+                priceDisplay: "Rp25.000",
+                badge: "Hemat",
+                image: "melberry.png",
+                description: "Paket Hemat I : Isi 3 Pcs Berry Choco Melt, Bebas Mix (Chocolate, Macha, Vanila)"
+            },
+            {
+                id: 7,
+                name: "Berry Choco Melt 4 Pcs",
+                category: "Paket Hemat",
+                price: 35.000,
+                priceDisplay: "Rp35.000",
+                badge: "Hemat",
+                image: "melberry.png",
+                description: "Paket Hemat II : Isi 4 Pcs Berry Choco Melt, Bebas Mix (Chocolate, Macha, Vanila) "
+            },
+            {
+                id: 8,
+                name: "Berry Choco Melt 5 Pcs",
+                category: "Paket Hemat",
+                price: 45.000,
+                priceDisplay: "Rp45.000",
+                badge: "Hemat",
+                image: "melberry.png",
+                description: "Paket Hemat III : Isi 5 Pcs Berry Choco Melt, Bebas Mix (Chocolate, Macha, Vanila) "
+            },
+            {
+                id: 9,
+                name: "Blueberry",
+                category: "Add-On",
+                price: 5.000,
+                priceDisplay: "Rp5.000",
+                badge: "Tambahan",
+                image: "blue.png",
+                description: "Tambahan blueberry segar untuk memberikan rasa manis, segar, dan lebih nikmat di setiap gigitan."
+            },
+            {
+                id: 10,
+                name: "Almond",
+                category: "Add-On",
+                price: 3.000,
+                priceDisplay: "Rp3.000",
+                badge: "Tambahan",
+                image: "al.png",
+                description: "Tambahan kacang almond renyah yang memberikan tekstur dan rasa gurih di setiap gigitan."
+            }
+            
+            
+    
+    
+
+           
+        
+        ];
+
+        // Global Application State Variables
+        let cart = [];
+        let selectedProductForModal = null;
+        let selectedQuantityModal = 1;
+        let isAudioPlaying = false;
+        let receiptFileUploaded = false;
+
+        // Initialize Application State on Window Load
+        window.onload = function() {
+            loadCartFromStorage();
+            renderProductsGrid("All");
+            setupConfig();
+            updateCartUI();
+        };
+
+        // Format Currency Helper
+        function formatRupiah(amount) {
+            return "Rp" + amount.toLocaleString("id-ID");
+        }
+
+        // Apply Configuration Constants to Links & Placeholders
+        function setupConfig() {
+            const waNumberClean = MELTBERRE_CONFIG.whatsappNumber.replace(/[^0-9]/g, "");
+            const defaultWaUrl = "https://wa.me/" + waNumberClean + "?text=" + encodeURIComponent("Halo Meltberre! 🤎 Saya ingin bertanya tentang produk dessert.");
+            
+            const contactWaBtn = document.getElementById("contactWaBtn");
+            if (contactWaBtn) contactWaBtn.href = defaultWaUrl;
+
+            const igLink = document.getElementById("igFollowLink");
+            if (igLink) igLink.href = MELTBERRE_CONFIG.instagramUrl;
+
+            const igText = document.getElementById("igUsernameText");
+            if (igText) igText.textContent = "Follow " + MELTBERRE_CONFIG.instagramUsername;
+
+            const qrisImg = document.getElementById("qrisImgDisplay");
+            if (qrisImg) qrisImg.src = MELTBERRE_CONFIG.qrisImage;
+        }
+
+        // Render Product Cards Grid with Optional Category Filtering
+        function renderProductsGrid(categoryFilter) {
+            const grid = document.getElementById("productsGrid");
+            if (!grid) return;
+
+            grid.innerHTML = "";
+            const filtered = categoryFilter === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === categoryFilter);
+
+            filtered.forEach(product => {
+                const card = document.createElement("div");
+                card.className = "bg-melt-white rounded-3xl p-4 border border-melt-beige/50 shadow-sm hover:shadow-floating transition-all duration-300 flex flex-col justify-between group";
+                
+                const badgeHtml = product.badge ? `<span class="absolute top-6 left-6 z-10 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-melt-dark text-melt-cream shadow-sm">${product.badge}</span>` : "";
+
+                card.innerHTML = `
+                    <div class="relative overflow-hidden rounded-2xl mb-4 bg-melt-cream aspect-square">
+                        ${badgeHtml}
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" onerror="this.src='https://placehold.co/600x600/E8D6C5/4A3024?text=${encodeURIComponent(product.name)}'">
+                        <button onclick="openProductModal(${product.id})" class="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-white/90 text-melt-dark flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md hover:bg-melt-beige">
+                            <i class="fa-solid fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-2 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-2">
+                                <h3 class="font-bold text-base text-melt-dark group-hover:text-melt-light transition-colors">${product.name}</h3>
+                                <span class="font-serif font-bold text-sm text-melt-dark px-2 py-0.5 rounded-lg bg-melt-cream">${product.priceDisplay}</span>
+                            </div>
+                            <p class="text-xs text-melt-dark/70 line-clamp-2 mt-1">${product.description}</p>
+                        </div>
+                        <div class="pt-3 flex gap-2">
+                            <button onclick="quickAddToCart(${product.id})" class="flex-grow py-2.5 rounded-full bg-melt-cream text-melt-dark font-semibold text-xs border border-melt-beige hover:bg-melt-dark hover:text-melt-cream hover:border-melt-dark transition-all">
+                                + Add to Cart
+                            </button>
+                            <button onclick="openProductModal(${product.id})" class="px-3 rounded-full bg-melt-white text-melt-dark border border-melt-beige text-xs hover:bg-melt-beige transition-all">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Products Handler
+        function filterProducts(category) {
+            const buttons = document.querySelectorAll(".category-btn");
+            buttons.forEach(btn => {
+                if (btn.textContent.includes(category) || (category === "All" && btn.textContent.includes("All"))) {
+                    btn.className = "category-btn active px-5 py-2 rounded-full text-xs font-semibold bg-melt-dark text-melt-cream shadow-sm transition-all";
+                } else {
+                    btn.className = "category-btn px-5 py-2 rounded-full text-xs font-semibold bg-melt-cream text-melt-dark hover:bg-melt-beige transition-all";
+                }
+            });
+            renderProductsGrid(category);
+        }
+
+        // Open Product Modal Preview
+        function openProductModal(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            selectedProductForModal = product;
+            selectedQuantityModal = 1;
+
+            const modalContent = document.getElementById("modalContent");
+            modalContent.innerHTML = `
+                <div class="rounded-2xl overflow-hidden bg-melt-cream h-60 relative">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-melt-soft px-2.5 py-1 rounded-full bg-melt-cream">${product.category}</span>
+                        <span class="font-serif font-bold text-xl text-melt-dark">${formatRupiah(product.price)}</span>
+                    </div>
+                    <h3 class="font-serif font-bold text-2xl text-melt-dark">${product.name}</h3>
+                    <p class="text-xs text-melt-dark/80 leading-relaxed">${product.description}</p>
+                    
+                    <div class="pt-2">
+                        <label class="block text-xs font-bold text-melt-dark mb-1">Catatan Khusus (Opsional):</label>
+                        <input type="text" id="modalProductNote" placeholder="Contoh: Mix Chocolate x Macha, atau Chocolate x Vanila" class="w-full px-3 py-2 rounded-xl border border-melt-beige bg-white text-xs text-melt-dark focus:outline-none focus:ring-1 focus:ring-melt-light">
+                    </div>
+
+                    <div class="flex items-center justify-between pt-3">
+                        <div class="flex items-center gap-3 bg-melt-cream px-3 py-1.5 rounded-full border border-melt-beige">
+                            <button onclick="updateModalQty(-1)" class="w-7 h-7 rounded-full bg-white text-melt-dark font-bold flex items-center justify-center hover:bg-melt-beige transition-all text-xs">-</button>
+                            <span id="modalQtyDisplay" class="font-bold text-sm text-melt-dark w-4 text-center">1</span>
+                            <button onclick="updateModalQty(1)" class="w-7 h-7 rounded-full bg-white text-melt-dark font-bold flex items-center justify-center hover:bg-melt-beige transition-all text-xs">+</button>
+                        </div>
+                        <button onclick="confirmAddToCartFromModal()" class="flex-grow ml-4 py-3 rounded-full bg-melt-dark text-melt-cream font-semibold text-xs hover:bg-melt-soft transition-all shadow-md">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("productModal").classList.remove("hidden");
+        }
+
+        function closeProductModal() {
+            document.getElementById("productModal").classList.add("hidden");
+        }
+
+        function updateModalQty(change) {
+            selectedQuantityModal += change;
+            if (selectedQuantityModal < 1) selectedQuantityModal = 1;
+            const display = document.getElementById("modalQtyDisplay");
+            if (display) display.textContent = selectedQuantityModal;
+        }
+
+        function confirmAddToCartFromModal() {
+            if (!selectedProductForModal) return;
+            const noteInput = document.getElementById("modalProductNote");
+            const note = noteInput ? noteInput.value.trim() : "";
+            
+            addToCart(selectedProductForModal, selectedQuantityModal, note);
+            closeProductModal();
+        }
+
+        function quickAddToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (product) {
+                addToCart(product, 1, "");
+            }
+        }
+
+        // Cart State & LocalStorage Management
+        function addToCart(product, qty, note) {
+            const existingIndex = cart.findIndex(item => item.id === product.id && item.note === note);
+
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += qty;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: qty,
+                    note: note
+                });
+            }
+
+            saveCartToStorage();
+            updateCartUI();
+            showToast(`"${product.name}" ditambahkan ke keranjang!`);
+        }
+
+        function updateCartQuantity(index, change) {
+            if (cart[index]) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                saveCartToStorage();
+                updateCartUI();
+            }
+        }
+
+        function removeFromCart(index) {
+            if (cart[index]) {
+                cart.splice(index, 1);
+                saveCartToStorage();
+                updateCartUI();
+            }
+        }
+
+        function saveCartToStorage() {
+            try {
+                localStorage.setItem("meltberre_cart", JSON.stringify(cart));
+            } catch (e) {
+                console.warn("Could not save cart to localStorage", e);
+            }
+        }
+
+        function loadCartFromStorage() {
+            try {
+                const saved = localStorage.getItem("meltberre_cart");
+                if (saved) cart = JSON.parse(saved);
+            } catch (e) {
+                cart = [];
+            }
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartBadge = document.getElementById("cartBadge");
+            if (cartBadge) cartBadge.textContent = totalItems;
+
+            const container = document.getElementById("cartItemsContainer");
+            const subtotalText = document.getElementById("cartSubtotalText");
+            const checkoutBtn = document.getElementById("checkoutBtn");
+
+            let subtotal = 0;
+
+            if (container) {
+                container.innerHTML = "";
+
+                if (cart.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-12 space-y-3">
+                            <div class="w-16 h-16 rounded-full bg-melt-cream text-melt-soft flex items-center justify-center mx-auto text-2xl">
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </div>
+                            <p class="font-serif text-lg font-bold text-melt-dark">Keranjangmu masih kosong</p>
+                            <p class="text-xs text-melt-dark/60">Yuk pilih dessert favoritmu di katalog!</p>
+                        </div>
+                    `;
+                    if (checkoutBtn) checkoutBtn.disabled = true;
+                } else {
+                    cart.forEach((item, idx) => {
+                        const itemTotal = item.price * item.quantity;
+                        subtotal += itemTotal;
+
+                        const itemEl = document.createElement("div");
+                        itemEl.className = "flex gap-3 bg-melt-white p-3 rounded-2xl border border-melt-beige/50 shadow-sm relative";
+                        itemEl.innerHTML = `
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl bg-melt-cream">
+                            <div class="flex-grow flex flex-col justify-between">
+                                <div class="pr-6">
+                                    <h4 class="font-bold text-xs text-melt-dark">${item.name}</h4>
+                                    ${item.note ? `<p class="text-[10px] text-melt-soft italic">Catatan: "${item.note}"</p>` : ""}
+                                    <p class="text-xs font-serif font-bold text-melt-dark mt-0.5">${formatRupiah(item.price)}</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-1">
+                                    <div class="flex items-center gap-2 bg-melt-cream px-2 py-0.5 rounded-full border border-melt-beige">
+                                        <button onclick="updateCartQuantity(${idx}, -1)" class="text-xs font-bold w-5 h-5 rounded-full bg-white flex items-center justify-center">-</button>
+                                        <span class="text-xs font-bold text-melt-dark">${item.quantity}</span>
+                                        <button onclick="updateCartQuantity(${idx}, 1)" class="text-xs font-bold w-5 h-5 rounded-full bg-white flex items-center justify-center">+</button>
+                                    </div>
+                                    <span class="text-xs font-bold text-melt-dark">${formatRupiah(itemTotal)}</span>
+                                </div>
+                            </div>
+                            <button onclick="removeFromCart(${idx})" class="absolute top-2 right-2 text-melt-dark/40 hover:text-red-500 p-1 text-xs">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        `;
+                        container.appendChild(itemEl);
+                    });
+                    if (checkoutBtn) checkoutBtn.disabled = false;
+                }
+            }
+
+            if (subtotalText) subtotalText.textContent = formatRupiah(subtotal);
+
+            const qrisTotalDisplay = document.getElementById("qrisTotalDisplay");
+            if (qrisTotalDisplay) qrisTotalDisplay.textContent = formatRupiah(subtotal);
+        }
+
+        function toggleCartDrawer(open) {
+            const drawer = document.getElementById("cartDrawer");
+            if (drawer) {
+                if (open) drawer.classList.remove("hidden");
+                else drawer.classList.add("hidden");
+            }
+        }
+
+        // Checkout Modal Logic
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showToast("Keranjangmu masih kosong!");
+                return;
+            }
+            toggleCartDrawer(false);
+            document.getElementById("checkoutModal").classList.remove("hidden");
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById("checkoutModal").classList.add("hidden");
+        }
+
+        function togglePaymentView(method) {
+            const qrisContainer = document.getElementById("qrisContainer");
+            const submitBtn = document.getElementById("submitOrderBtn");
+
+            if (method === "QRIS") {
+                qrisContainer.classList.remove("hidden");
+                submitBtn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> Send Confirmation via WhatsApp`;
+            } else {
+                qrisContainer.classList.add("hidden");
+                submitBtn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> Send Order via WhatsApp`;
+            }
+        }
+
+        // Receipt Image File Preview
+        function handleReceiptPreview(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("receiptPreviewImg").src = e.target.result;
+                    document.getElementById("receiptFileName").textContent = file.name;
+                    document.getElementById("receiptPreviewContainer").classList.remove("hidden");
+                    receiptFileUploaded = true;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function clearReceiptUpload() {
+            const input = document.getElementById("receiptUpload");
+            if (input) input.value = "";
+            document.getElementById("receiptPreviewContainer").classList.add("hidden");
+            receiptFileUploaded = false;
+        }
+
+        // Handle Checkout Submission & WhatsApp Message Generation
+        function handleCheckoutSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("custName").value.trim();
+            const phone = document.getElementById("custPhone").value.trim();
+            const address = document.getElementById("custAddress").value.trim();
+            const notes = document.getElementById("custNotes").value.trim();
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            if (paymentMethod === "QRIS" && !receiptFileUploaded) {
+                alert("Silakan upload bukti pembayaran QRIS terlebih dahulu!");
+                return;
+            }
+
+            let total = 0;
+            let orderListText = "";
+
+            cart.forEach((item, idx) => {
+                const sub = item.price * item.quantity;
+                total += sub;
+                orderListText += `${idx + 1}. ${item.name} (${item.quantity}x) = ${formatRupiah(sub)}\n`;
+                if (item.note) {
+                    orderListText += `   Catatan: "${item.note}"\n`;
+                }
+            });
+
+            const waNumberClean = MELTBERRE_CONFIG.whatsappNumber.replace(/[^0-9]/g, "");
+
+            let message = `Halo Kaka! \nSaya ingin melakukan pemesanan dessert:\n\n`;
+            message += `*DAFTAR PESANAN:*\n${orderListText}\n`;
+            message += `*TOTAL:* ${formatRupiah(total)}\n\n`;
+            message += `*DATA PEMESAN:*\n`;
+            message += `• Nama: ${name}\n`;
+            message += `• No. WhatsApp: ${phone}\n`;
+            message += `• Alamat Pengiriman: ${address}\n`;
+            if (notes) message += `• Catatan Tambahan: ${notes}\n`;
+            message += `• Metode Pembayaran: ${paymentMethod === "QRIS" ? "QRIS (Bukti transfer sudah disiapkan)" : "Direct WhatsApp"}\n\n`;
+            message += `Terima kasih!`;
+
+            const waUrl = `https://wa.me/${waNumberClean}?text=${encodeURIComponent(message)}`;
+
+            // Clear Cart and Close Modals
+            cart = [];
+            saveCartToStorage();
+            updateCartUI();
+            closeCheckoutModal();
+
+            // Redirect to WhatsApp
+            window.open(waUrl, "_blank");
+        }
+
+        // Floating Audio Player Logic
+        function toggleAudio() {
+            const audio = document.getElementById("bgAudio");
+            const playIcon = document.getElementById("musicPlayIcon");
+            const headerIcon = document.getElementById("musicIconHeader");
+            const headerText = document.getElementById("musicTextHeader");
+            const visualizer = document.getElementById("eqVisualizer");
+
+            if (!audio) return;
+
+            if (isAudioPlaying) {
+                audio.pause();
+                isAudioPlaying = false;
+                if (playIcon) playIcon.className = "fa-solid fa-play text-xs";
+                if (headerIcon) headerIcon.className = "fa-solid fa-music text-melt-soft";
+                if (headerText) headerText.textContent = "Play Audio";
+                if (visualizer) visualizer.classList.add("hidden");
+            } else {
+                audio.play().then(() => {
+                    isAudioPlaying = true;
+                    if (playIcon) playIcon.className = "fa-solid fa-pause text-xs";
+                    if (headerIcon) headerIcon.className = "fa-solid fa-volume-high text-emerald-600";
+                    if (headerText) headerText.textContent = "Playing ♫";
+                    if (visualizer) visualizer.classList.remove("hidden");
+                }).catch(err => {
+                    console.log("Audio play blocked by browser:", err);
+                    showToast("Tekan tombol play untuk memulai audio");
+                });
+            }
+        }
+
+        // Mobile Menu Navigation Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobileMenu");
+            const icon = document.getElementById("mobileMenuIcon");
+            if (menu) {
+                menu.classList.toggle("hidden");
+                if (icon) {
+                    if (menu.classList.contains("hidden")) {
+                        icon.className = "fa-solid fa-bars text-xl";
+                    } else {
+                        icon.className = "fa-solid fa-xmark text-xl";
+                    }
+                }
+            }
+        }
+
+        // Notification Toast Popup Handler
+        function showToast(msg) {
+            const toast = document.getElementById("toastNotification");
+            const toastMsg = document.getElementById("toastMessage");
+            if (toast && toastMsg) {
+                toastMsg.textContent = msg;
+                toast.classList.remove("translate-y-20", "opacity-0");
+                toast.classList.add("translate-y-0", "opacity-100");
+
+                setTimeout(() => {
+                    toast.classList.remove("translate-y-0", "opacity-100");
+                    toast.classList.add("translate-y-20", "opacity-0");
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
